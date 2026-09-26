@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: devboard-configmap
+  namespace: devboard-ns
+
+data:
+  POSTGRESS_USER: devboard
+  POSTGRESS_DB: devboard
+  PORT: "8080"
+  

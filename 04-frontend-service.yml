@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: devboard-ns
+
+spec:
+  selector:
+    app: devboard-fe
+
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4173 #container Port
+      nodePort: 30001
+
+  #type: If the type of service is not given it's called cluser ip
+
+  type: NodePort
