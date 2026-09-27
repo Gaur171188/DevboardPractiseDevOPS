@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: storage-demo-pv
+
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes: 
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual #for local it's manual for Cloud it's automatic
+  hostPath:
+    path: /mnt/storage-demo-manish
