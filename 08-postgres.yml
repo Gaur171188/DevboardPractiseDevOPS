@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: StatefulSet
+
+metadata:
+  name: postgres
+  namespace: devboard-ns
+  labels:
+    app: devboard-postgres
+
+spec:
+  replicas: 1
+
+  serviceName: postgres
+
+  selector:
+    matchLabels:
+      app: devboard-postgres
+
+  template:
+    metadata:
+      labels:
+        app: devboard-postgres
+
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+
+          ports:
+            - containerPort: 5432
+              name: postgres
+
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - pg_isready -U "$POSTGRESS_USER" -d "$POSTGRESS_DB" #it checks db state is it live,ready or in start up stage
+            initialDelaySeconds: 10
+            periodSeconds: 5
+
+          env:
+            - name: POSTGRESS_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: devboard-configmap
+                  key: POSTGRESS_USER
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: devboard-secrets
+                  key: POSTGRESS_PASSWORD
+
+            - name: POSTGRESS_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: devboard-configmap
+                  key: POSTGRESS_DB
+
+          volumeMounts:
+            - name: pgdata
+              mountPath: /var/lib/postgresql/data
+
+            - name: postgres-init
+              mountPath: /docker-entrypoint-initdb.d
+
+      volumes:
+        - name: postgres-init
+          configMap:
+            name: postgres-init
+
+  volumeClaimTemplates:
+    - metadata:
+        name: pgdata
+
+      spec:
+        accessModes:
+          - ReadWriteOnce
+
+        storageClassName: manual
+
+        resources:
+          requests:
+            storage: 0.5Gi

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: devboard-backend
-          image: trainwithshubham/devboard-backend:latest
+          image: gauravph17/devboard-backend:latest
        
        
           ports:
@@ -30,7 +30,7 @@ spec:
                   name: devboard-configmap
                   key: PORT
 
-            - name: POSTGRES_PASSWORD
+            - name: POSTGRESS_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: devboard-secrets
@@ -49,7 +49,7 @@ spec:
                    key: POSTGRESS_DB
 
             - name: POSTGRES_URL
-              value: postgres://$(POSTGRESS_USER):$(POSTGRES_PASSWORD)@postgres:5432/$(POSTGRESS_DB)?sslmode=disable
+              value: postgres://$(POSTGRESS_USER):$(POSTGRESS_PASSWORD)@postgres:5432/$(POSTGRESS_DB)?sslmode=disable
 
       resources:
          requests:

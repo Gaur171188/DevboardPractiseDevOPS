@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: devboard-ns
+
+spec:
+  selector:
+    app: devboard-be
+
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080 #container Port
