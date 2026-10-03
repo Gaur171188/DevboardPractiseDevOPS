@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: backend-deployment
+  namespace: {{ .Values.namespace }}
+
+  labels:
+    app: devboard-be
+
+spec:
+  replicas: {{ .Values.backend.replicas }}
+
+  selector:
+    matchLabels:
+      app: devboard-be
+
+  template:
+    metadata:
+      labels:
+        app: devboard-be
+
+    spec:
+      containers:
+
+        - name: devboard-backend
+
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+
+          ports:
+            - containerPort: {{ .Values.backend.containerPort }}
+
+          env:
+
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: devboard-configmap
+                  key: PORT
+
+            - name: POSTGRESS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: devboard-secrets
+                  key: POSTGRESS_PASSWORD
+
+            - name: POSTGRESS_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: devboard-configmap
+                  key: POSTGRESS_USER
+
+            - name: POSTGRESS_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: devboard-configmap
+                  key: POSTGRESS_DB
+
+            - name: POSTGRES_URL
+              value: postgres://$(POSTGRESS_USER):$(POSTGRESS_PASSWORD)@postgres:5432/$(POSTGRESS_DB)?sslmode=disable
+
+          resources:
+
+            requests:
+              cpu: 10m
+              memory: 64Mi
+
+            limits:
+              cpu: 250m
+              memory: 128Mi

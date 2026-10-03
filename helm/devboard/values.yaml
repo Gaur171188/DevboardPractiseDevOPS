@@ -1,0 +1,24 @@
+namespace: devboard-ns
+
+frontend:
+  replicas: 2
+  image:
+    repository: gauravph17/devboard-frontend
+    tag: latest
+  port: 80
+  targetPort: 4173  
+  nodePort: 30001
+
+
+backend:
+  replicas: 2
+  image:
+    repository: gauravph17/devboard-backend
+    tag: latest
+
+  containerPort: 8080
+
+postgres:
+  image:
+    repository: postgres
+    tag: "16-alpine"

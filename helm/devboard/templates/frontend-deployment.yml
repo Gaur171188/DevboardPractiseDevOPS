@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: frontend-deployment
+  namespace: {{ .Values.namespace }}
+
+  labels:
+    app: devboard-fe
+
+spec:
+  replicas: {{ .Values.frontend.replicas }}
+
+  selector:
+    matchLabels:
+      app: devboard-fe
+
+  template:
+    metadata:
+      labels:
+        app: devboard-fe
+
+    spec:
+      containers:
+        - name: devboard-frontend
+
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+
+          ports:
+            - containerPort: {{ .Values.frontend.containerPort }}
+
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+
+            limits:
+              cpu: 250m
+              memory: 128Mi
