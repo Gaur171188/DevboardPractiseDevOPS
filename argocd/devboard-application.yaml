@@ -11,7 +11,7 @@ spec:
 
   source:
     repoURL: https://github.com/Gaur171188/DevboardPractiseDevOPS.git
-    targetRevision: main
+    targetRevision: helmimplemntation
     path: helm/devboard
 
     helm:
