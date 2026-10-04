@@ -4,7 +4,7 @@ frontend:
   replicas: 4
   image:
     repository: gauravph17/devboard-frontend
-    tag: latest
+    tag: v2
   port: 80
   containerPort: 4173
   nodePort: 30001
