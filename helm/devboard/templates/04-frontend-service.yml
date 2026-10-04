@@ -11,7 +11,7 @@ spec:
   ports:
     - protocol: TCP
       port: {{ .Values.frontend.port }} #service port
-      targetPort: {{ .Values.frontend.targetPort }} #container Port
+      targetPort: {{ .Values.frontend.containerPort }} #container Port
       nodePort: {{ .Values.frontend.nodePort }}
 
   #type: If the type of service is not given it's called cluser ip

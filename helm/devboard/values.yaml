@@ -1,17 +1,17 @@
 namespace: devboard-ns
 
 frontend:
-  replicas: 2
+  replicas: 3
   image:
     repository: gauravph17/devboard-frontend
     tag: latest
   port: 80
-  targetPort: 4173  
+  containerPort: 4173
   nodePort: 30001
 
 
 backend:
-  replicas: 2
+  replicas: 3
   image:
     repository: gauravph17/devboard-backend
     tag: latest
