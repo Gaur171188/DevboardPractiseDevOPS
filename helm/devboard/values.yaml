@@ -1,7 +1,7 @@
 namespace: devboard-ns
 
 frontend:
-  replicas: 3
+  replicas: 2
   image:
     repository: gauravph17/devboard-frontend
     tag: latest
@@ -11,7 +11,7 @@ frontend:
 
 
 backend:
-  replicas: 3
+  replicas: 2
   image:
     repository: gauravph17/devboard-backend
     tag: latest
